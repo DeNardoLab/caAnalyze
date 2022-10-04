@@ -24,7 +24,7 @@
 %% Adjustable Parameters
 
 ca_downsample = 2; %Factor by which calcium data was temporally downsampled by
-    
+ca_fileID = '*data_processed*';    
     
 %% Ask for Input Directory and Decide if Single or Batch
 % Record base directory
@@ -36,7 +36,7 @@ input_dir = uigetdir('Select Directories for Analysis');
 cd(input_dir)
 
 % Check for presence of miniscope output file in given data_dir
-batch_check = dir('*data_processed*');
+batch_check = dir(ca_fileID);
 analysis_dirs = {};
 
 % If miniscope output detected, turn off batch

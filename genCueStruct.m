@@ -1,24 +1,36 @@
-function Cues = genCueStruct(cue_file, totalCaFrames, downsample)
+%% genCueStruct
 
-load(cue_file, 'cueframes', 'exp_ID');
-cues = fieldnames(cueframes);
+function Cues = genCueStruct(cues, total_ca_frames, ca_downsample, csp_ID, us_ID)
 
-Cues.ID = exp_ID;
+% OLD VERSION
+% load(cue_file, 'cueframes', 'exp_ID');
+% cues = fieldnames(cueframes);
 
-for i = 1:length(cues)
-    if strcmp(cues(i), 'csp')
+cue_fields = fieldnames(cues);
+
+for i = 1:length(cue_fields)
+    if strcmpi(cue_fields(i), 'csp')
         
-        Cues.tones = round(cueframes.(cues{i}) ./ downsample);
-        Cues.toneVector = makeVector(Cues.tones, totalCaFrames);
+        Cues.(csp_ID) = round(cues.csp ./ ca_downsample);
+
+        if strcmpi(csp_ID(end), 's') 
+            Cues.([csp_ID(1:end-1), 'Vector']) = makeVector(Cues.(csp_ID), total_ca_frames);
+        else
+            Cues.([csp_ID, 'Vector']) = makeVector(Cues.(csp_ID), total_ca_frames);
+        end
         
-    elseif strcmp(cues(i), 'us')
+    elseif strcmpi(cue_fields(i), 'us')
      
-        Cues.shocks = round(cueframes.(cues{i}) ./ downsample);
-        Cues.shockVector = makeVector(Cues.shocks, totalCaFrames);  
-        
+        Cues.(us_ID) = round(cues.us ./ ca_downsample);
+
+        if strcmpi(us_ID(end), 's')
+            Cues.([us_ID(1:end-1), 'Vector']) = makeVector(Cues.shocks, total_ca_frames);  
+        else
+            Cues.([us_ID, 'Vector']) = makeVector(Cues.shocks, total_ca_frames);
+        end
     end
 end
 
-save(['Cues_' exp_ID], 'Cues')
+save('Cues', 'Cues')
 
 end
