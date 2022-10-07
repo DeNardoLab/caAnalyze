@@ -28,7 +28,7 @@ ca_fileID = '*data_processed*';
 csp_ID = 'tones';
 us_ID = 'shocks';
 
-run_roc = 0;
+run_roc = 1;
 sig_label = 'dff';
     
 %% Ask for Input Directory and Decide if Single or Batch
@@ -66,27 +66,20 @@ if prep_data
     caAnalyze_prepData(analysis_dirs, ca_downsample, csp_ID, us_ID);
 end
 
-if refine_features
-    
-
-end
-
 %% Run ROC Analysis
 
 if run_roc
     for i = 1:length(analysis_dirs)
         cd(analysis_dirs{i})
-        try
-            if exist('rFeatures.mat') > 1
-                load('rFeatures.mat')
-            else
-                load('Features.mat')
-            end
-            sig_search = dir(ca_fileID);
-            S = load(sig_search.name, sig_label);
-            signal = S.(sig_label);
-            clearvars S sig_search
-            caAnalyze_runROC(Features, signal, sig_label)
+        if exist('rFeatures.mat') > 1
+            load('rFeatures.mat')
+        else
+            load('Features.mat')
         end
+        sig_search = dir(ca_fileID);
+        S = load(sig_search.name, sig_label);
+        signal = S.(sig_label);
+        clearvars S sig_search
+        caAnalyze_runROC(Features, signal, sig_label)
     end
 end

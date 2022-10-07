@@ -31,14 +31,12 @@ for ii = 1:size(features, 1)
         ROC_Log = vertcat(ROC_Log, table(Signal, Vector, Excited, Prcnt_E, Suppressed, Prcnt_S));
     
     catch
-        disp(['Error running ROC on ' features{ii}])
-        disp(['Error dir: ' pwd])
+        
     
-    end
-
-try
-    save('ROC_Log.mat', 'ROC_Log')
 end
+
+save('ROC_Log.mat', 'ROC_Log')
+
 end
 
 
