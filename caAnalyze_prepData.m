@@ -1,6 +1,6 @@
 %% caAnalyze_prepData
 
-function caAnalyze_prepData(analysis_dirs, ca_downsample, csp_ID, us_ID)
+function caAnalyze_prepData(analysis_dirs, ca_downsample, csp_ID, us_ID, ca_fileID)
 
 for n = 1:size(analysis_dirs, 1)
     
@@ -9,7 +9,7 @@ for n = 1:size(analysis_dirs, 1)
     
     % Register files in current_data_dir
     behDepot_search = dir('*_analyzed*');
-    ca_search = dir('*data_processed*');
+    ca_search = dir(ca_fileID);
     cue_search = dir('*cue*.csv');
     ts_search = dir('*timeStamps*.csv');
     frlu_search = dir('*frlu*.mat');
@@ -132,7 +132,7 @@ for n = 1:size(analysis_dirs, 1)
 %% Segment tone/shock cues into learning periods (for v4PMA settings)
         
     % Collect labels for behavior session (learning / retrieval)
-    Cues = getSessionLabels(Cues);
+    Cues = getSessionLabels(Cues, total_ca_frames);
     
     % Make vectors in Features for each session period
     Features = applySession(Cues, Features);

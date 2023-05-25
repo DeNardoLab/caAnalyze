@@ -21,16 +21,16 @@
     % FUTURE: 5) Population Analysis
     % FUTURE: 6) GLM Variance Analysis
 
-    function caAnalyze_mainscript(prep_data, run_roc)
+function run_caAnalyze(prep_data, run_roc, input_dir)
     
 %% ADJUSTABLE PARAMETERS
-prep_data = false;
+% prep_data = false;
 ca_downsample = 2; %Factor by which calcium data was temporally downsampled by
 ca_fileID = '*minian_processed*';   
 csp_ID = 'tones';
 us_ID = 'shocks';
 
-run_roc = true;
+% run_roc = true;
 sig_label = 'rdff';
 
 %% Ask for Input Directory and Decide if Single or Batch
@@ -38,7 +38,7 @@ sig_label = 'rdff';
 base_dir = pwd;
 
 % Collect data directory
-input_dir = uigetdir('Select Directories for Analysis');
+% input_dir = uigetdir('Select Directories for Analysis');
 
 cd(input_dir)
 
@@ -88,4 +88,5 @@ if run_roc
         disp(['@ ' datestr(now, 'HH:MM:SS')])
         disp([int2str(length(analysis_dirs)-i) ' more sessions in this batch'])
     end
+end
 end

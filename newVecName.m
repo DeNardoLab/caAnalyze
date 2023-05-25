@@ -4,18 +4,17 @@ if nargin == 1
     key1 = lower(erase(vec_name1, {'Vector', 'vector'}));
     keys = {key1};
     
-elseif nargin == 2
-
+elseif nargin == 2  
     vec_name2 = varargin{1};
+        
+    key1 = erase(vec_name1, {'Vector', 'vector'});   
+    key2 = erase(vec_name2, {'Vector', 'vector'});
     
-    key1 = lower(erase(vec_name1, {'Vector', 'vector'}));   
-    key2 = lower(erase(vec_name2, {'Vector', 'vector'}));
-
     if size(key1, 2) ~= 2
-        keys = sort({key1, key2});
+        keys = sort({lower(key1), lower(key2)});
         keys(2) = {[upper(keys{2}(1)), keys{2}(2:end)]};
     else
-        keys = {[upper(key1), key2]};
+        keys = {[key1, key2]};
     end
     
 elseif nargin == 3
@@ -28,6 +27,6 @@ elseif nargin == 3
     keys = {key1, keys{1}, keys{2}};
 end
     
-    new_vec_name = [keys{:} 'Vector'];
+new_vec_name = [keys{:} 'Vector'];
 
 end
